@@ -144,6 +144,8 @@
 }
 .pub-viewport {
   overflow: hidden;
+  /* senkrecht scrollt der Browser, waagerecht wischt das Karussell */
+  touch-action: pan-y;
 }
 .pub-track {
   display: flex;
@@ -168,10 +170,11 @@
   display: flex;
   gap: 6px;
 }
+/* Sichtbar ist ein Strich von 2 Pixeln, die Tippfläche ist 30 x 26 groß */
 .pub-dot {
   width: 30px;
-  height: 20px;
-  padding: 9px 0;
+  height: 26px;
+  padding: 12px 0;
   border: 0;
   background: var(--border-strong);
   background-clip: content-box;

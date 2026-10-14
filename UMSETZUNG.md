@@ -398,6 +398,28 @@ zur vorherigen Fassung (abgesehen von verzögert geladenen Bildern).
 Dateien: `src/styles/ui.css`, `src/styles/layout.css`,
 `src/features/chart/geometry.ts`, `src/components/charts/AufwandChart.tsx`.
 
+### Nacharbeit: Bedienung am Handy (Oktober 2026)
+Was:
+- Handymenü nach dem Scrollen kaputt: Der Header bekam beim Scrollen ein
+  `transform`. Ein transform macht das Element zum Bezugsrahmen für feste
+  Kindelemente, das Vollbildmenü war dann nur so hoch wie der Header. Jetzt
+  über `top` gelöst, sieht gleich aus. Das Menü beginnt außerdem genau unter
+  der Leiste, auch in der kompakten Form nach dem Scrollen.
+- Publikationskarussell: Wischgeste (eigener Hook `useSwipe`), nach Antippen
+  kein automatischer Weiterlauf mehr, kein versehentlicher Klick nach dem
+  Wischen, senkrechtes Scrollen bleibt möglich (`touch-action: pan-y`).
+- Formularfelder am Handy mit 16 Pixeln Schrift, sonst vergrößert das iPhone
+  die Seite beim Antippen.
+- Tippflächen auf mindestens 24 Pixel vergrößert, ohne die Lage zu ändern
+  (Logo, Zurück-Link im Seitenkopf, Punkte des Karussells, Impressum-Link,
+  Tabellen-Aufklapper am Diagramm).
+Geprüft mit Touch-Emulation bei 375 Pixeln: Menü oben und nach dem Scrollen
+öffnen, Ausklappbereiche, im Menü scrollen, Link antippen; Karussell wischen
+in beide Richtungen; kein waagerechtes Scrollen auf allen Seiten.
+Dateien: `src/styles/layout.css`, `ui.css`, `sections.css`, `features.css`,
+`src/components/sections/Publications.tsx`,
+`src/features/carousel/useSwipe.ts`.
+
 ## 4. Neue Struktur (Seitenbaum)
 
 ```

@@ -1,4 +1,4 @@
-import type { FocusEvent } from "react"
+import type { FocusEvent, PointerEvent } from "react"
 import ArrowLink from "../ui/ArrowLink"
 import Card from "../ui/Card"
 import Reveal from "../ui/Reveal"
@@ -9,6 +9,7 @@ import {
   useCarousel,
   useSlidesPerView,
 } from "../../features/carousel/useCarousel"
+import { useSwipe } from "../../features/carousel/useSwipe"
 
 // Startseite: alle Beiträge als Karussell. Die vollständige Liste liegt
 // gebündelt im Research Lab.
@@ -18,6 +19,14 @@ export default function Publications() {
     count: publications.length,
     perView,
   })
+
+  const swipe = useSwipe({ onLeft: next, onRight: prev })
+
+  // Am Handy gibt es kein Überfahren mit der Maus. Wer das Karussell antippt
+  // oder wischt, will lesen: Dann bleibt es stehen.
+  function handlePointerDown(event: PointerEvent<HTMLDivElement>) {
+    if (event.pointerType !== "mouse") pause()
+  }
 
   // Pause nur beenden, wenn der Fokus das Karussell wirklich verlässt.
   function handleBlur(event: FocusEvent<HTMLDivElement>) {
@@ -45,8 +54,9 @@ export default function Publications() {
           onMouseLeave={resume}
           onFocus={pause}
           onBlur={handleBlur}
+          onPointerDown={handlePointerDown}
         >
-          <div className="pub-viewport">
+          <div className="pub-viewport" {...swipe}>
             <div
               className="pub-track"
               style={{

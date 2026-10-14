@@ -9,12 +9,15 @@
   right: 0;
   z-index: 60;
   background: var(--surface);
-  transition: transform 0.25s ease;
+  transition: top 0.25s ease;
 }
 /* Beim Scrollen fährt die Servicezeile nach oben weg. Der Header bleibt
-   fest stehen, deshalb verschiebt sich der Inhalt darunter nicht. */
+   fest stehen, deshalb verschiebt sich der Inhalt darunter nicht.
+   Bewusst über top statt transform: Ein transform macht den Header zum
+   Bezugsrahmen für das feste Handymenü darin, das Menü wäre dann nur noch
+   so hoch wie der Header. */
 .site-header--scrolled {
-  transform: translateY(calc(var(--service-bar-h) * -1));
+  top: calc(var(--service-bar-h) * -1);
 }
 
 .service-bar {
@@ -73,9 +76,13 @@
   justify-content: space-between;
   gap: 28px;
 }
-.brand {
+.brand,
+.footer-brand > a {
   display: inline-flex;
   align-items: center;
+  /* größere Tippfläche, ohne die Lage zu verändern */
+  padding-block: 10px;
+  margin-block: -10px;
 }
 .nav__list {
   display: flex;
@@ -232,9 +239,11 @@
 }
 
 /* Handymenü --------------------------------------------------------- */
+/* Beginnt genau unter dem Header: oben mit Servicezeile (falls sichtbar),
+   nach dem Scrollen unter der kompakten Leiste */
 .mobile-menu {
   position: fixed;
-  top: var(--nav-h);
+  top: calc(var(--service-bar-h) + var(--nav-h));
   left: 0;
   right: 0;
   bottom: 0;
@@ -242,6 +251,9 @@
   overflow-y: auto;
   background: var(--surface);
   padding: 12px var(--gutter) 64px;
+}
+.site-header--scrolled .mobile-menu {
+  top: var(--nav-h-compact);
 }
 .mobile-menu__item {
   border-bottom: 1px solid var(--border);
@@ -361,6 +373,10 @@
   gap: 24px;
 }
 .footer-legal a {
+  /* größere Tippfläche, ohne die Lage zu verändern */
+  display: inline-block;
+  padding-block: 6px;
+  margin-block: -6px;
   color: var(--text-on-dark-muted);
   text-decoration: underline;
   text-underline-offset: 3px;
