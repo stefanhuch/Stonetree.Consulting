@@ -323,3 +323,136 @@
     font-size: 16px;
   }
 }
+
+/* Einwilligungsbanner ----------------------------------------------
+   Am unteren Rand, die Seite bleibt dahinter bedienbar. Am Handy stehen die
+   Knöpfe untereinander, die Einstellungen sind scrollbar, falls der
+   Bildschirm niedrig ist. */
+.consent {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* unter Header (60) und Handymenü (59): Ein geöffnetes Menü liegt über dem
+     Banner und bleibt ganz bedienbar, danach ist das Banner wieder sichtbar */
+  z-index: 58;
+  max-height: 85vh;
+  max-height: 85dvh;
+  overflow-y: auto;
+  padding-block: 24px calc(24px + env(safe-area-inset-bottom, 0px));
+  background: var(--surface);
+  border-top: 1px solid var(--border-strong);
+  box-shadow: 0 -8px 24px rgb(0 0 0 / 0.08);
+}
+.consent__inner {
+  display: grid;
+  gap: 14px;
+}
+.consent__titel {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text);
+}
+.consent__titel:focus {
+  outline: none;
+}
+.consent__text {
+  max-width: 82ch;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text-body);
+}
+.consent__text a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.consent__kategorien {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.consent__kategorie {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-body);
+  cursor: pointer;
+}
+.consent__kategorie input {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  accent-color: var(--accent);
+}
+.consent__kategorie strong {
+  display: block;
+  font-weight: 500;
+  color: var(--text);
+}
+.consent__beschreibung {
+  display: block;
+  margin-top: 2px;
+}
+.consent__aktionen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+}
+.consent__mehr {
+  padding: 10px 4px;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+@media (max-width: 640px) {
+  .consent {
+    padding-block: 18px calc(18px + env(safe-area-inset-bottom, 0px));
+  }
+  .consent__aktionen .btn {
+    flex: 1 1 100%;
+  }
+  .consent__mehr {
+    flex: 1 1 100%;
+  }
+}
+
+/* Datenschutzerklärung */
+.legal-text {
+  max-width: var(--measure);
+  display: grid;
+  gap: 32px;
+}
+.legal-text h2 {
+  margin-bottom: 8px;
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--text);
+}
+.legal-text p {
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--text-body);
+}
+.legal-text p + p {
+  margin-top: 0.8em;
+}
+.legal-text__aktion {
+  margin-top: 40px;
+}

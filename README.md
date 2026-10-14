@@ -60,6 +60,16 @@ Drei Wege, beschrieben in [docs/hosting.md](docs/hosting.md):
 | [Arbeitsplan.md](Arbeitsplan.md) | ursprünglicher Zeitplan |
 | [frontend/README.md](frontend/README.md) | Bilder, Hero-Video, Gestaltungsregeln |
 
+## Datenschutz
+
+- Keine Anfragen an Dritte beim Laden: Schrift, Bilder und Videos kommen vom
+  eigenen Server.
+- Einwilligungsbanner (`frontend/src/features/consent/`): Statistik lädt erst
+  nach Zustimmung, Widerruf über „Cookie-Einstellungen“ in der Fußzeile.
+  Statistikdienst einschalten: `docs/hosting.md`, Abschnitt „Statistik
+  einschalten“.
+- Impressum und Datenschutzerklärung sind Muster für die fiktive Website.
+
 ## Medien
 
 Fotos und Videos stammen von Unsplash und Pexels, Nachweis in

@@ -223,5 +223,24 @@ Mit Docker wie auf dem Server: `.env` mit `DOMAIN=localhost` anlegen und
 - Das Impressum enthält bewusst Musterdaten mit Hinweis auf die fiktive
   Website. Für eine echte Firma echte Daten eintragen (`frontend/src/data/site.ts`)
   und eine Datenschutzerklärung ergänzen, die Kontaktformular und Mailanbieter nennt.
-- Google Fonts werden derzeit von Google geladen. Für DSGVO sauberer ist, die
-  Schrift Ubuntu selbst auszuliefern.
+- Die Schrift Ubuntu kommt aus dem eigenen Build (`@fontsource/ubuntu`),
+  beim Aufruf geht keine Anfrage an Google oder andere Dritte.
+- Datenschutzerklärung (`/datenschutz`) ist ein Muster. Inhalt in
+  `frontend/src/data/datenschutz.ts`.
+
+### Statistik einschalten
+
+Das Einwilligungsbanner ist eingebaut, ein Statistikdienst aber noch nicht
+eingetragen. So wird einer aktiviert:
+
+1. Dienst wählen, der sich mit einem Skript einbinden lässt und Daten in der
+   EU verarbeitet (z. B. Matomo Cloud, Plausible, Umami).
+2. In `frontend/src/data/einwilligung.ts` bei `statistikDienst` Name,
+   Anbieter, Skript-Adresse, Attribute (z. B. Website-ID) und Link zur
+   Datenschutzerklärung des Dienstes eintragen.
+3. Dort `EINWILLIGUNG_VERSION` um eins erhöhen, damit alle Besucher neu
+   gefragt werden.
+4. Pushen. Die Datenschutzerklärung nennt den Dienst danach automatisch.
+
+Das Skript lädt erst nach Zustimmung im Banner. Ein Widerruf über
+„Cookie-Einstellungen“ in der Fußzeile lädt die Seite neu, dann ohne Statistik.

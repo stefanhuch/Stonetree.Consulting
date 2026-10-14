@@ -38,6 +38,7 @@ Tabelle: Verwendete Abkürzungen
 | CSS | Cascading Style Sheets |
 | DDG | Digitale-Dienste-Gesetz |
 | DSGVO | Datenschutz-Grundverordnung |
+| DSK | Datenschutzkonferenz der unabhängigen Datenschutzaufsichtsbehörden |
 | FAQ | Frequently Asked Questions, häufige Fragen |
 | HTTPS | Hypertext Transfer Protocol Secure |
 | KI | Künstliche Intelligenz |
@@ -46,6 +47,7 @@ Tabelle: Verwendete Abkürzungen
 | LLM | Large Language Model, großes Sprachmodell |
 | MStV | Medienstaatsvertrag |
 | SMTP | Simple Mail Transfer Protocol |
+| TDDDG | Telekommunikation-Digitale-Dienste-Datenschutz-Gesetz |
 | WCAG | Web Content Accessibility Guidelines |
 
 <!-- main -->
@@ -79,7 +81,7 @@ Tabelle: Rahmendaten des Projekts
 | Zeitraum | 23. Juni 2026 bis 4. Oktober 2026 |
 | Geplanter Aufwand | etwa vier Stunden pro Woche über 13 Wochen |
 | Umfang | elf Commits, rund 180 Dateien im Repository, rund 7.000 Zeilen Quelltext im Frontend |
-| Seiten | Startseite, drei Bereichsseiten, Karriereseite, Impressum, Logo-Vorschau, Fehlerseite |
+| Seiten | Startseite, drei Bereichsseiten, Karriereseite, Impressum, Datenschutzerklärung, Logo-Vorschau, Fehlerseite |
 | Technik | React 18, TypeScript 7, Vite 6, Tailwind CSS 4, FastAPI |
 | Betrieb | seit 04.10.2026 veröffentlicht unter https://ahuemmer3.github.io/Stonetree.Consulting/, Umzug auf eine IONOS-Domain vorgesehen, Docker-Betrieb mit Backend vorbereitet |
 | Repositorys | GitLab der Hochschule: gitlab.hof-university.de/ahuemmer/h2h-consulting; GitHub: github.com/ahuemmer3/Stonetree.Consulting |
@@ -449,6 +451,23 @@ Das Impressum steht seit Oktober 2026 auf einer eigenen Seite. Es enthält alle 
 
 ![Impressum mit Hinweis auf die fiktive Website](../abbildungen/impressum.jpg)
 
+## Datenschutz und Einwilligung
+
+Für eine öffentlich erreichbare Website sind eine Datenschutzerklärung und, sobald Daten zu Statistikzwecken erhoben werden sollen, eine Einwilligung der Besucher nötig. Ausschlaggebend ist § 25 TDDDG: Speichern oder Auslesen von Informationen im Endgerät ist nur mit Einwilligung zulässig, es sei denn, es ist für den gewünschten Dienst unbedingt erforderlich [30]. Für die anschließende Verarbeitung personenbezogener Daten gilt die DSGVO.
+
+Vor dem Einbau des Banners wurde geprüft, welche Daten die Website ohne Zutun der Besucher an Dritte überträgt. Ergebnis war ein Punkt: Die Schrift Ubuntu wurde von Google Fonts geladen, wodurch bei jedem Aufruf die IP-Adresse an Google ging. Ein Banner hätte daran nichts geändert, weil die Schrift vor jeder Entscheidung lädt. Die Schrift wird deshalb seitdem aus dem eigenen Build ausgeliefert. Eine Messung im Browser bestätigt, dass beim ersten Aufruf keine Anfrage an einen fremden Server mehr geht.
+
+Das Einwilligungsbanner folgt vier Regeln, die sich aus der Orientierungshilfe der Datenschutzkonferenz ergeben [31]:
+
+- Ablehnen ist so einfach wie Zustimmen. Die Knöpfe Alle akzeptieren und Nur notwendige sind gleich gestaltet und gleich groß.
+- Nichts ist vorausgewählt. Die Kategorie Statistik ist beim ersten Aufruf abgewählt.
+- Die Website bleibt hinter dem Banner bedienbar, Impressum und Datenschutzerklärung sind jederzeit erreichbar.
+- Die Entscheidung lässt sich jederzeit über Cookie-Einstellungen in der Fußzeile ändern. Ein Widerruf lädt die Seite neu, damit ein bereits geladenes Statistikskript nicht weiterläuft.
+
+Technisch liegt die Einwilligung als eigenes Feature in `src/features/consent`. Die Speicherung der Entscheidung ist von der Darstellung getrennt, ein Statistikdienst wird erst nach Zustimmung als Skript nachgeladen. Welcher Dienst das ist, steht als Eintrag in `src/data/einwilligung.ts`. Derzeit ist bewusst kein Dienst eingetragen, weil die Wahl eines Anbieters mit dem Betreiber der Domain abzustimmen ist. Ein Test mit einem Platzhalterdienst bestätigt das Verhalten: vor der Entscheidung und nach Ablehnen keine Anfrage, nach Zustimmen genau eine, nach Widerruf wieder keine.
+
+Die Datenschutzerklärung ist wie das Impressum als Muster gekennzeichnet. Ihre Abschnitte hängen vom Betrieb ab: Läuft die Seite ohne Backend, beschreibt sie das Kontaktformular als Weg über das eigene E-Mail-Programm, mit Backend den Versand über den Server. Ist ein Statistikdienst eingetragen, wird er mit Name und Anbieter genannt.
+
 ## Barrierefreiheit als inhaltliche Aufgabe
 
 Barrierefreiheit betrifft nicht nur die Technik, sondern auch die Texte. Die Website orientiert sich an den WCAG 2.2 [13]:
@@ -610,6 +629,8 @@ Der größte Gewinn liegt in der mobilen Ansicht. Vorher wurde das Video dort mi
 
 Ganzseitige Screenshots wurden bei 375, 768, 1280 und 1920 Pixeln Breite erstellt und vor und nach der Überarbeitung abgelegt. Für diese Dokumentation wurde die mobile Ansicht zusätzlich mit einer echten Geräteemulation von 375 Pixeln geprüft. Auf keiner der geprüften Seiten ist die Seite breiter als der Bildschirm. Die Reiterleiste der Bereichsseiten ist am Smartphone breiter als der Bildschirm. Sie lässt sich waagerecht wischen, der aktive Reiter wird automatisch ins Bild geholt, und ein Verlauf am rechten Rand zeigt, dass weitere Reiter folgen.
 
+Im Oktober 2026 wurde die Bedienung zusätzlich mit Touch-Emulation geprüft. Dabei fiel ein Fehler auf, den reine Screenshots nicht zeigen: Nach dem Scrollen war das Handymenü nur so hoch wie die Kopfzeile, weil die Kopfzeile beim Scrollen ein CSS-transform erhielt und damit zum Bezugsrahmen des festen Menüs wurde. Die Kopfzeile verschiebt sich seitdem über die Eigenschaft top. Außerdem lässt sich das Publikationskarussell wischen und bleibt nach dem Antippen stehen, Formularfelder haben am Smartphone 16 Pixel Schrift, damit iOS beim Antippen nicht vergrößert, und alle Tippflächen sind mindestens 24 Pixel groß (WCAG 2.2, Erfolgskriterium 2.5.8 [13]).
+
 ![Mobile Ansicht bei 375 Pixeln: Startseite, Bereichsseite und Karriereseite](../abbildungen/mobil.jpg)
 
 ## Grenzen der Prüfung
@@ -686,7 +707,7 @@ Der Livegang auf einem eigenen Server folgt der Anleitung in `docs/hosting.md`: 
 
 ## Besonderheiten einer fiktiven Website
 
-Zwei Punkte betreffen alle Veröffentlichungswege. Erstens darf das fiktive Unternehmen nicht in Suchergebnissen erscheinen, wo es für echt gehalten werden könnte. Jede Seite trägt deshalb die Anweisung `noindex, nofollow` für Suchmaschinen. Zweitens werden Schriften derzeit von Google Fonts geladen. Nach der Rechtsprechung des LG München I ist die Weitergabe der IP-Adresse an Google ohne Einwilligung problematisch [22]. Vor einer dauerhaften Veröffentlichung sollte die Schrift deshalb selbst ausgeliefert werden.
+Zwei Punkte betreffen alle Veröffentlichungswege. Erstens darf das fiktive Unternehmen nicht in Suchergebnissen erscheinen, wo es für echt gehalten werden könnte. Jede Seite trägt deshalb die Anweisung `noindex, nofollow` für Suchmaschinen. Zweitens wurden Schriften anfangs von Google Fonts geladen. Nach der Rechtsprechung des LG München I ist die Weitergabe der IP-Adresse an Google ohne Einwilligung problematisch [22]. Die Schrift wird deshalb inzwischen selbst ausgeliefert (siehe Abschnitt 4.15).
 
 # Einsatz von KI-Werkzeugen
 
@@ -738,8 +759,8 @@ Tabelle: Offene Punkte
 | Punkt | Zuständig | Bemerkung |
 | --- | --- | --- |
 | Umzug auf die IONOS-Domain | Umsetzung mit Betreuung | gebuchtes IONOS-Paket klären, dann passende Variante |
-| Schrift selbst ausliefern | Umsetzung | derzeit über Google Fonts |
-| Datenschutzhinweise | Umsetzung | müssen Kontaktformular und Mailanbieter nennen |
+| Statistikdienst auswählen | Umsetzung mit Betreuung | Banner und Datenschutzerklärung sind vorbereitet, Eintrag in `src/data/einwilligung.ts` |
+| Datenschutzerklärung prüfen | Betreiber der Domain | Muster, vor echtem Einsatz rechtlich prüfen lassen |
 | Tastaturtest im echten Browser | Umsetzung | Ausklappmenüs bisher nur im Code geprüft |
 | Eigene Fotos und Videos | Auftraggeber | derzeit freie Stockbilder |
 | Entscheidung Logo und Akzentfarbe | Auftraggeber | Vorschau unter /marke, Vergleich als Screenshot |
@@ -809,6 +830,10 @@ Für eine Weiterentwicklung bieten sich drei Richtungen an. Erstens eine englisc
 [28] automationflow: KI Use Cases Mittelstand 2026. https://www.automationflow.de/wissen/ki-use-cases-mittelstand-2026-der-praxis-guide, abgerufen am 04.10.2026.
 
 [29] World Wide Web Consortium (W3C): ARIA Authoring Practices Guide, Tabs Pattern. https://www.w3.org/WAI/ARIA/apg/patterns/tabs/, abgerufen am 04.10.2026.
+
+[30] Telekommunikation-Digitale-Dienste-Datenschutz-Gesetz (TDDDG), § 25 Schutz der Privatsphäre bei Endeinrichtungen.
+
+[31] Datenschutzkonferenz (DSK): Orientierungshilfe der Aufsichtsbehörden für Anbieter:innen von digitalen Diensten (OH Digitale Dienste), Version 1.2, 2024.
 
 # Anhang {-}
 

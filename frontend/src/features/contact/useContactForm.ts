@@ -28,6 +28,10 @@ const EMPTY: ContactValues = { name: "", email: "", message: "" }
 // gesetzt. Dann öffnet das Formular das E-Mail-Programm mit der Nachricht.
 const CONTACT_ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT ?? "/api/contact"
 
+// true: Formular öffnet das E-Mail-Programm (kein Backend). Die
+// Datenschutzerklärung beschreibt danach den passenden Weg.
+export const kontaktPerMailprogramm = !CONTACT_ENDPOINT
+
 function mailtoLink({ name, email, message }: ContactValues): string {
   const subject = encodeURIComponent(`Anfrage von ${name.trim()}`)
   const body = encodeURIComponent(

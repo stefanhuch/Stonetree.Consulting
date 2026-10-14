@@ -3,9 +3,11 @@ import Logo from "../brand/Logo"
 import { site } from "../../data/site"
 import { pillars } from "../../data/pillars"
 import { karriereColumns } from "../../data/navigation"
+import { useConsent } from "../../features/consent/consentContext"
 
 export default function Footer() {
   const karriereLinks = karriereColumns[0].links
+  const { oeffneEinstellungen } = useConsent()
 
   return (
     <footer className="site-footer on-dark">
@@ -54,6 +56,10 @@ export default function Footer() {
           </span>
           <nav className="footer-legal__links" aria-label="Rechtliches">
             <Link to="/impressum">Impressum</Link>
+            <Link to="/datenschutz">Datenschutz</Link>
+            <button type="button" className="footer-legal__button" onClick={oeffneEinstellungen}>
+              Cookie-Einstellungen
+            </button>
             <span>© 2026 {site.brand} GmbH</span>
           </nav>
         </div>

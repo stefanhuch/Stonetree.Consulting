@@ -420,6 +420,27 @@ Dateien: `src/styles/layout.css`, `ui.css`, `sections.css`, `features.css`,
 `src/components/sections/Publications.tsx`,
 `src/features/carousel/useSwipe.ts`.
 
+### Nacharbeit: Datenschutz und Einwilligung (Oktober 2026)
+Was:
+- Schrift Ubuntu aus dem eigenen Build (`@fontsource/ubuntu`, nur lateinische
+  Zeichen, fünf Schnitte) statt von Google Fonts. Beim Laden geht keine
+  Anfrage mehr an fremde Server (im Browser gemessen).
+- Einwilligungsbanner als Feature `src/features/consent/`: Speicher
+  (`speicher.ts`), Laden der Statistik (`statistik.ts`), gemeinsamer Zustand
+  (`consentContext.ts`, `ConsentProvider.tsx`), Darstellung
+  (`CookieBanner.tsx`). Texte und Dienst in `src/data/einwilligung.ts`.
+- Regeln: Ablehnen gleich gestaltet wie Zustimmen, nichts vorausgewählt,
+  Seite bleibt bedienbar, Widerruf über die Fußzeile (lädt neu). Das Banner
+  liegt unter dem Handymenü, damit ein geöffnetes Menü ganz bedienbar bleibt.
+- Datenschutzerklärung `/datenschutz` als Muster, Abschnitte passen sich an
+  (Kontakt mit oder ohne Backend, Statistikdienst ja oder nein).
+- Fußzeile: Impressum, Datenschutz, Cookie-Einstellungen.
+Geprüft: Banner bei 375 und 1280 Pixeln, Entscheidung bleibt nach Neuladen,
+Fußzeile öffnet die Einstellungen mit Fokus. Mit einem Platzhalterdienst:
+keine Anfrage vor der Entscheidung und nach Ablehnen, genau eine nach
+Zustimmen, keine nach Widerruf.
+Offen: Statistikdienst auswählen und eintragen (Anleitung in `docs/hosting.md`).
+
 ## 4. Neue Struktur (Seitenbaum)
 
 ```
@@ -453,6 +474,8 @@ TypeScript-Interfaces in `src/data/`:
 - `ApproachItem` (approach.ts): die drei Arbeitsweise-Punkte.
 - `NavLink` (navigation.ts): Navigationslinks.
 - `Site`, `Impressum` (site.ts): Marke, Tagline, Kontakt, Impressum.
+- `StatistikDienst`, `Kategorie` (einwilligung.ts), `DatenschutzAbschnitt` (datenschutz.ts): Einwilligung und Datenschutzerklärung.
+- `Einwilligung` (features/consent/speicher.ts): gespeicherte Entscheidung mit Version und Zeitpunkt.
 - `ContactValues`, `ContactStatus` (features/contact/useContactForm.ts): Formularfelder und Versandzustand.
 - `ContactRequest` (backend/app/contact.py): Anfrage an `POST /api/contact`, geprüft mit Pydantic.
 

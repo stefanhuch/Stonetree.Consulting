@@ -7,6 +7,8 @@ import PillarPage from "./pages/PillarPage"
 import KarrierePage from "./pages/KarrierePage"
 import MarkePage from "./pages/MarkePage"
 import ImpressumPage from "./pages/ImpressumPage"
+import DatenschutzPage from "./pages/DatenschutzPage"
+import CookieBanner from "./features/consent/CookieBanner"
 import NotFoundPage from "./pages/NotFoundPage"
 
 // Sorgt dafür, dass bei jedem Seitenwechsel sinnvoll gescrollt wird:
@@ -45,6 +47,7 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/karriere" element={<KarrierePage />} />
           <Route path="/impressum" element={<ImpressumPage />} />
+          <Route path="/datenschutz" element={<DatenschutzPage />} />
           {/* Interne Vorschau der Logo-Varianten */}
           <Route path="/marke" element={<MarkePage />} />
           {/* Alte Bereichs-Pfade weiterleiten, damit keine Links ins Leere laufen */}
@@ -63,6 +66,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+      <CookieBanner />
     </>
   )
 }
